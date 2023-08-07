@@ -24,6 +24,7 @@ pub(crate) struct PartialDriveHelper {
     rate_limiter: RateLimiterConf,
 }
 
+/// Manage disks for microVM
 #[derive(Debug, Subcommand)]
 pub(crate) enum DriveCmd {
     Add(DriveHelper),
