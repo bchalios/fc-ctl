@@ -1,20 +1,15 @@
-use clap::{Args, Subcommand};
+use clap::Subcommand;
 use fclib::client::vm::MachineConfiguration;
 use fclib::client::ApiClient;
 
 use crate::Result;
 
+/// Configure architectural characteristics of the microVM
 #[derive(Debug, Subcommand)]
 pub(crate) enum MachineConfigCmd {
     Config(MachineConfiguration),
     Get,
     Update(MachineConfiguration),
-}
-
-#[derive(Debug, Args)]
-pub(crate) struct MachineConfigArgs {
-    drive_id: String,
-    drive_json: String,
 }
 
 impl MachineConfigCmd {

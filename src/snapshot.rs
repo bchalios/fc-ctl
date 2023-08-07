@@ -4,6 +4,7 @@ use fclib::client::ApiClient;
 
 use crate::Result;
 
+/// microVM snapshot operations
 #[derive(Debug, Subcommand)]
 pub(crate) enum SnapshotCmd {
     /// Create a microVM snapshot

@@ -6,6 +6,7 @@ use fclib::client::ApiClient;
 use crate::rate_limiter::{RateLimiterConf, WithRateLimiterConf};
 use crate::Result;
 
+/// Configure microVM entropy device
 #[derive(Debug, Args)]
 pub(crate) struct EntropyArgs {
     #[clap(flatten)]

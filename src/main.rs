@@ -11,7 +11,7 @@ use clap::{Parser, Subcommand};
 use drive::DriveCmd;
 use entropy::EntropyArgs;
 use fclib::client::{ApiClient, FcClientError};
-use kernel::BootSourceCmd;
+use kernel::BootSourceArgs;
 use machine_config::MachineConfigCmd;
 use network::NetCommand;
 use snapshot::SnapshotCmd;
@@ -47,8 +47,7 @@ enum Commands {
     Net(NetCommand),
     #[command(subcommand)]
     MachineConfig(MachineConfigCmd),
-    #[command(subcommand)]
-    Kernel(BootSourceCmd),
+    Kernel(BootSourceArgs),
     #[command(subcommand)]
     Microvm(VmStateCmd),
     #[command(subcommand)]
@@ -65,7 +64,7 @@ async fn main() -> Result<()> {
         Commands::Drive(cmd) => cmd.parse(&mut api_client).await?,
         Commands::MachineConfig(cmd) => cmd.parse(&mut api_client).await?,
         Commands::Net(cmd) => cmd.parse(&mut api_client).await?,
-        Commands::Kernel(cmd) => cmd.parse(&mut api_client).await?,
+        Commands::Kernel(args) => kernel::parse(&mut api_client, &args).await?,
         Commands::Microvm(cmd) => cmd.parse(&api_client).await?,
         Commands::Snapshot(cmd) => cmd.parse(&api_client).await?,
         Commands::Entropy(args) => entropy::parse(&mut api_client, &args).await?,

@@ -104,6 +104,7 @@ pub(crate) struct PartialNetworkInterfaceHelper {
     rate_limiter: NetRateLimiterConf,
 }
 
+/// Manage network interfaces for microVM
 #[derive(Debug, Subcommand)]
 pub(crate) enum NetCommand {
     /// Attach a new network interface to the microVM

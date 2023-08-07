@@ -1,20 +1,17 @@
-use clap::Subcommand;
+use clap::Args;
 use fclib::client::kernel::BootSource;
 use fclib::client::ApiClient;
 
 use crate::Result;
 
-#[derive(Debug, Subcommand)]
-pub(crate) enum BootSourceCmd {
-    Set(BootSource),
+/// Configure microVM guest kernel
+#[derive(Debug, Args)]
+pub(crate) struct BootSourceArgs {
+    #[clap(flatten)]
+    kernel: BootSource,
 }
 
-impl BootSourceCmd {
-    pub(crate) async fn parse(&self, api_client: &mut ApiClient) -> Result<()> {
-        match self {
-            Self::Set(source) => api_client.set_boot_source(source).await?,
-        }
-
-        Ok(())
-    }
+pub(crate) async fn parse(api_client: &mut ApiClient, args: &BootSourceArgs) -> Result<()> {
+    api_client.set_boot_source(&args.kernel).await?;
+    Ok(())
 }
