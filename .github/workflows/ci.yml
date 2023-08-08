@@ -60,3 +60,14 @@ jobs:
 
       - name: Check formatting
         run: cargo fmt --all --check
+
+  markdown:
+    name: markdown
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check for broken links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
