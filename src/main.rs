@@ -1,3 +1,4 @@
+mod balloon;
 mod drive;
 mod entropy;
 mod kernel;
@@ -7,6 +8,7 @@ mod rate_limiter;
 mod snapshot;
 mod vm_state;
 
+use balloon::BalloonCmd;
 use clap::{Parser, Subcommand};
 use drive::DriveCmd;
 use entropy::EntropyArgs;
@@ -53,6 +55,8 @@ enum Commands {
     #[command(subcommand)]
     Snapshot(SnapshotCmd),
     Entropy(EntropyArgs),
+    #[command(subcommand)]
+    Balloon(BalloonCmd),
 }
 
 #[tokio::main]
@@ -68,6 +72,7 @@ async fn main() -> Result<()> {
         Commands::Microvm(cmd) => cmd.parse(&api_client).await?,
         Commands::Snapshot(cmd) => cmd.parse(&api_client).await?,
         Commands::Entropy(args) => entropy::parse(&mut api_client, &args).await?,
+        Commands::Balloon(cmd) => cmd.parse(&mut api_client).await?,
     }
 
     Ok(())
