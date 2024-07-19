@@ -7,6 +7,7 @@ mod network;
 mod rate_limiter;
 mod snapshot;
 mod vm_state;
+mod vsock;
 
 use balloon::BalloonCmd;
 use clap::{Parser, Subcommand};
@@ -18,6 +19,7 @@ use machine_config::MachineConfigCmd;
 use network::NetCommand;
 use snapshot::SnapshotCmd;
 use vm_state::VmStateCmd;
+use vsock::VsockArgs;
 
 #[derive(thiserror::Error, Debug)]
 enum Error {
@@ -57,6 +59,7 @@ enum Commands {
     Entropy(EntropyArgs),
     #[command(subcommand)]
     Balloon(BalloonCmd),
+    Vsock(VsockArgs),
 }
 
 #[tokio::main]
@@ -73,6 +76,7 @@ async fn main() -> Result<()> {
         Commands::Snapshot(cmd) => cmd.parse(&api_client).await?,
         Commands::Entropy(args) => entropy::parse(&mut api_client, &args).await?,
         Commands::Balloon(cmd) => cmd.parse(&mut api_client).await?,
+        Commands::Vsock(args) => vsock::parse(&mut api_client, &args).await?,
     }
 
     Ok(())
